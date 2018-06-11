@@ -1,0 +1,32 @@
+{
+  "name": "next.js-redux",
+  "version": "1.0.0",
+  "description": "A Next.js + Redux playground",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Oren Hadar",
+    "url": "https://github.com/orenhd"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@zeit/next-sass": "^0.2.0",
+    "classnames": "^2.2.6",
+    "es6-promise": "^4.2.4",
+    "isomorphic-fetch": "^2.2.1",
+    "material-ui": "^0.20.1",
+    "next": "6.0.3",
+    "node-sass": "^4.9.0",
+    "react": "16.4.0",
+    "react-dom": "16.4.0",
+    "react-intl": "^2.4.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^3.0.1"
+  }
+}
