@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
 import PropTypes from "prop-types";
 
-import {FormattedMessage, FormattedDate} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { $t } from '../i18n/i18n.service';
 
 import Link from 'next/link';
@@ -33,7 +32,7 @@ class Application extends Component {
     handleClose = () => this.setState({ open: false });
 
     render() {
-        const { activePageRoute, isPageRenderedOnServer, userName } = this.props;
+        const { activePageRoute, isPageRenderedOnServer, userName, currentGenreId } = this.props;
 
         const clickingExampleAnchorClass = classNames({
             [styles.navLinkActive]: activePageRoute === 'clicking-example'
@@ -72,7 +71,7 @@ class Application extends Component {
                 </MenuItem>
             </a>
           </Link>
-          <Link href="/top-twenty">
+          <Link href={'/top-twenty' + (currentGenreId ? `?genreId=${currentGenreId}` : '')}>
             <a
                 className={topTwentylbumsAnchorClass}
             >
@@ -93,17 +92,20 @@ class Application extends Component {
 Application.propTypes = {
     activePageRoute: PropTypes.string,
     isPageRenderedOnServer: PropTypes.bool,
-    userName: PropTypes.string
+    userName: PropTypes.string,
+    currentGenreId: PropTypes.number,
 }
 
 const mapStateToProps = (state) => {
-    const { application, clickingExample } = state;
+    const { application, clickingExample, topTwentyAlbums } = state;
     const { activePageRoute, isPageRenderedOnServer } = application;
     const { userName } = clickingExample;
+    const { currentGenreId } = topTwentyAlbums;
     return {
         activePageRoute,
         isPageRenderedOnServer,
-        userName
+        userName,
+        currentGenreId,
     }
 }
 

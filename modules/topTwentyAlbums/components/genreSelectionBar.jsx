@@ -21,7 +21,7 @@ const GenreSelectionBar = (props) =>
 GenreSelectionBar.propTypes = {
     genres: PropTypes.arrayOf(dataTypes.ITunesGenre).isRequired,
     currentGenre: dataTypes.ITunesGenre,
-    genreSelectedHandler: PropTypes.func.isRequired
+    genreSelectedHandler: PropTypes.func
 }
 
 export default GenreSelectionBar;

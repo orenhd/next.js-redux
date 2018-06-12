@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Router from 'next/router';
 
 import PropTypes from "prop-types";
 
-import { loadAlbumEntriesByGenreId } from './topTwentyAlbums.actions';
 import { getCurrentGenre, getAlbumEntriesList } from './topTwentyAlbums.selectors';
 
 import * as dataTypes from './topTwentyAlbums.dataTypes';
@@ -18,9 +18,8 @@ class TopTwentyAlbums extends PureComponent {
     /* Lifecycle Methods */
 
     /* Class Methods */
-
-    loadAlbumEntriesByGenreId = (genreId) => {
-        this.props.loadAlbumEntriesByGenreId(genreId);
+    handleGenreSelection = (genreId) => {
+        Router.push(`/top-twenty?genreId=${genreId}`)
     }
 
     render() {
@@ -28,7 +27,7 @@ class TopTwentyAlbums extends PureComponent {
             <GenreSelectionBar 
                 genres={this.props.genres} 
                 currentGenre={this.props.currentGenre}
-                genreSelectedHandler={this.loadAlbumEntriesByGenreId}
+                genreSelectedHandler={this.handleGenreSelection}
             />
             <AlbumsList
                 albumEntriesList={this.props.albumEntriesList}
@@ -41,7 +40,6 @@ TopTwentyAlbums.propTypes = {
     genres: PropTypes.arrayOf(dataTypes.ITunesGenre).isRequired,
     currentGenre: dataTypes.ITunesGenre,
     albumEntriesList: PropTypes.arrayOf(viewTypes.AlbumEntryListItem).isRequired,
-    loadAlbumEntriesByGenreId: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
@@ -55,7 +53,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        loadAlbumEntriesByGenreId
     }, dispatch);
 }
 

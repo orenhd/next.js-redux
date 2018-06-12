@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import Router from 'next/router';
+import { connect } from 'react-redux';
 
 import { setActivePageRoute, setIsPageRenderedOnServer } from '../application/application.actions';
 import { setGenres, setCurrentGenreId, setAlbumEntries } from '../modules/topTwentyAlbums/topTwentyAlbums.actions';
@@ -10,8 +10,8 @@ import * as ITunesService from "../modules/topTwentyAlbums/services/iTunes.servi
 import TopTwentyAlbums from '../modules/topTwentyAlbums/topTwentyAlbums';
 
 class TopTwentyAlbumsPage extends Component {
-  static async getInitialProps ({ reduxStore, req, query }) {
-    const isServer = !!req
+  static async getInitialProps ({ reduxStore, req, res, query }) {
+    const isServer = !!req;
 
     reduxStore.dispatch(setActivePageRoute('top-twenty'));
     reduxStore.dispatch(setIsPageRenderedOnServer(isServer));
@@ -20,17 +20,30 @@ class TopTwentyAlbumsPage extends Component {
 
     const genres = await ITunesService.getGenres();
 
-    if (genres && genres[0]) {
-      reduxStore.dispatch(setGenres(genres));
+    if (!genres || !genres[0]) return {};
 
-      const genreId = genres[0].id;
+    const genresIds = genres.map((genre) => { return genre.id });
 
-      reduxStore.dispatch(setCurrentGenreId(genreId));
+    reduxStore.dispatch(setGenres(genres));
 
-      const albumEntries = await ITunesService.getTopTwentyAlbumsByGenreId(genreId);
-      
-      reduxStore.dispatch(setAlbumEntries(albumEntries));
+    if (!query.genreId || !genresIds.includes(parseInt(query.genreId))) {
+      // redirect to topTwentyAlbums at the first genre received
+      const redirectTarget = `/top-twenty?genreId=${genres[0].id}`
+      if (isServer) {
+          res.writeHead(307, {Location: redirectTarget}); // 307 - temporary URL redirection
+          res.end()
+      } else {
+          Router.push(redirectTarget); 
+      }
     }
+
+    const genreId = parseInt(query.genreId) || genres[0].id;
+
+    reduxStore.dispatch(setCurrentGenreId(genreId));
+
+    const albumEntries = await ITunesService.getTopTwentyAlbumsByGenreId(genreId);
+    
+    reduxStore.dispatch(setAlbumEntries(albumEntries));
 
     return {};
   }
