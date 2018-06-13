@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';
 import { $t } from '../i18n/i18n.service';
 
-import Link from 'next/link';
+import { Link } from '../routes/site.routes'
 
 import classNames from 'classnames';
 
@@ -59,7 +59,7 @@ class Application extends Component {
           <MenuItem className={styles.menuItemTitle}>
                 <FormattedMessage id="general.navigation" />
           </MenuItem>
-          <Link href="/clicking-example">
+          <Link route="/clicking-example">
             <a 
                 className={clickingExampleAnchorClass}
             >
@@ -71,7 +71,7 @@ class Application extends Component {
                 </MenuItem>
             </a>
           </Link>
-          <Link href={'/top-twenty' + (currentGenreId ? `?genreId=${currentGenreId}` : '')}>
+          <Link route='/top-twenty' params={{ genreId: currentGenreId }}>
             <a
                 className={topTwentylbumsAnchorClass}
             >

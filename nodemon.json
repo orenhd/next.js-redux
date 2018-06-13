@@ -1,0 +1,3 @@
+{
+    "ignore": ["routes", "pages", "node_modules", ".next"]
+}

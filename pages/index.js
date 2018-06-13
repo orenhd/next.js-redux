@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Router from 'next/router';
+import { Router } from '../routes/site.routes';
 
 export default class Index extends Component {
   static getInitialProps (ctx) {
@@ -10,7 +10,7 @@ export default class Index extends Component {
         ctx.res.writeHead(301, {Location: `/top-twenty`}); // 301 - permanent URL redirection
         ctx.res.end()
     } else {
-        Router.push(`/top-twenty`); 
+        Router.pushRoute('top-twenty'); 
     }
   }
 }

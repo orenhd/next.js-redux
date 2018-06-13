@@ -22,7 +22,7 @@ class MyApp extends App {
     return (
       <Container>
         <Head>
-        <meta charset="UTF-8" />
+        <meta charSet="UTF-8" />
         <title>Next.js + Redux</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/static/favicon.ico" />

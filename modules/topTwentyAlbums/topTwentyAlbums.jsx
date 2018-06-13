@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Router from 'next/router';
+import { Router } from '../../routes/site.routes';
 
 import PropTypes from "prop-types";
 
@@ -19,7 +19,7 @@ class TopTwentyAlbums extends PureComponent {
 
     /* Class Methods */
     handleGenreSelection = (genreId) => {
-        Router.push(`/top-twenty?genreId=${genreId}`)
+        Router.pushRoute('top-twenty', { genreId : genreId.toString() })
     }
 
     render() {

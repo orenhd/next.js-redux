@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Router from 'next/router';
+import { Router } from '../routes/site.routes';
 import { connect } from 'react-redux';
 
 import { setActivePageRoute, setIsPageRenderedOnServer } from '../application/application.actions';
@@ -10,7 +10,8 @@ import * as ITunesService from "../modules/topTwentyAlbums/services/iTunes.servi
 import TopTwentyAlbums from '../modules/topTwentyAlbums/topTwentyAlbums';
 
 class TopTwentyAlbumsPage extends Component {
-  static async getInitialProps ({ reduxStore, req, res, query }) {
+  static async getInitialProps (ddd) {
+    const { reduxStore, req, res, query } = ddd;
     const isServer = !!req;
 
     reduxStore.dispatch(setActivePageRoute('top-twenty'));
@@ -28,12 +29,11 @@ class TopTwentyAlbumsPage extends Component {
 
     if (!query.genreId || !genresIds.includes(parseInt(query.genreId))) {
       // redirect to topTwentyAlbums at the first genre received
-      const redirectTarget = `/top-twenty?genreId=${genres[0].id}`
       if (isServer) {
-          res.writeHead(307, {Location: redirectTarget}); // 307 - temporary URL redirection
+          res.writeHead(307, {Location: `/top-twenty/${genres[0].id}`}); // 307 - temporary URL redirection
           res.end()
       } else {
-          Router.push(redirectTarget); 
+          Router.pushRoute('top-twenty', { genreId: genres[0].id }); 
       }
     }
 

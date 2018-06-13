@@ -4,5 +4,6 @@ An ES6, Server-Side Rendered (SSR) version of the functionality presented on [re
 
 ## Notable Changes
 - Redux integration was done according to the example provided by [zeit](https://github.com/zeit/next.js/tree/master/examples/with-redux).
+- Runs on a custom [express](https://www.npmjs.com/package/express) server, in order to utilize [next-routes](https://www.npmjs.com/package/next-routes) for dynamic routes support.
 - Isomorphic promise and fetch support is done by using [es6-promise](https://www.npmjs.com/package/es6-promise) and [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch) accordingly.
 - Added an icon on the app bar, indicating the rendering location of the current page (server or client).
