@@ -71,7 +71,7 @@ class Application extends Component {
                 </MenuItem>
             </a>
           </Link>
-          <Link route='/top-twenty' params={{ genreId: currentGenreId }}>
+          <Link route='top-twenty' params={{ genreId: currentGenreId || 0 }}>
             <a
                 className={topTwentylbumsAnchorClass}
             >

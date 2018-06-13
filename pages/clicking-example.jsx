@@ -6,7 +6,7 @@ import { setActivePageRoute, setIsPageRenderedOnServer } from '../application/ap
 import ClickingExample from '../modules/clickingExample/clickingExample';
 
 class ClickingExamplePage extends Component {
-  static getInitialProps ({ reduxStore, req }) {
+  static async getInitialProps ({ reduxStore, req }) {
     const isServer = !!req
 
     reduxStore.dispatch(setActivePageRoute('clicking-example'));

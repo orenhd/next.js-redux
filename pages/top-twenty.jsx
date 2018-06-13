@@ -10,8 +10,7 @@ import * as ITunesService from "../modules/topTwentyAlbums/services/iTunes.servi
 import TopTwentyAlbums from '../modules/topTwentyAlbums/topTwentyAlbums';
 
 class TopTwentyAlbumsPage extends Component {
-  static async getInitialProps (ddd) {
-    const { reduxStore, req, res, query } = ddd;
+  static async getInitialProps ({ reduxStore, req, res, query }) {
     const isServer = !!req;
 
     reduxStore.dispatch(setActivePageRoute('top-twenty'));

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Router } from '../routes/site.routes';
 
 export default class Index extends Component {
-  static getInitialProps (ctx) {
+  static async getInitialProps (ctx) {
     const isServer = !!ctx && !!ctx.req;
 
     // redirect to topTwentyAlbums by default
