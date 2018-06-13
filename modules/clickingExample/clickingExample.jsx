@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Dispatch, bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import PropTypes from "prop-types";
@@ -17,10 +17,6 @@ class ClickingExample extends PureComponent {
 
     /* Class Methods */
 
-    setUserName = (userName) => {
-        this.props.setUserName(userName);
-    }
-
     homeButtonClicked = () => {
         this.props.updateClickingData(ClickCountTypesEnum.homeButtonClick);
     }
@@ -30,10 +26,12 @@ class ClickingExample extends PureComponent {
     }
 
     render() {
+        const { setUserName } = this.props;
+
         return <div className="clicking-example margined-content">
             <UserNameBar 
                 userName={this.props.userName} 
-                userNameChangedHandler={this.setUserName}
+                userNameChangedHandler={setUserName}
             />
             <ClickingPanel
                 clickingData={this.props.clickingData}
