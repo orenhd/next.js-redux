@@ -10,48 +10,48 @@ import * as ITunesService from "../modules/topTwentyAlbums/services/iTunes.servi
 import TopTwentyAlbums from '../modules/topTwentyAlbums/topTwentyAlbums';
 
 class TopTwentyAlbumsPage extends Component {
-  static async getInitialProps ({ reduxStore, req, res, query }) {
-    const isServer = !!req;
+    static async getInitialProps({ reduxStore, req, res, query }) {
+        const isServer = !!req;
 
-    reduxStore.dispatch(setActivePageRoute('top-twenty'));
-    reduxStore.dispatch(setIsPageRenderedOnServer(isServer));
+        reduxStore.dispatch(setActivePageRoute('top-twenty'));
+        reduxStore.dispatch(setIsPageRenderedOnServer(isServer));
 
-    /* break down the thunk flow according to the async api calls */
+        /* break down the thunk flow according to the async api calls */
 
-    const genres = await ITunesService.getGenres();
+        const genres = await ITunesService.getGenres();
 
-    if (!genres || !genres[0]) return {};
+        if (!genres || !genres[0]) return {};
 
-    const genresIds = genres.map((genre) => { return genre.id });
+        const genresIds = genres.map((genre) => { return genre.id });
 
-    reduxStore.dispatch(setGenres(genres));
+        reduxStore.dispatch(setGenres(genres));
 
-    if (!query.genreId || !genresIds.includes(parseInt(query.genreId))) {
-      // redirect to topTwentyAlbums at the first genre received
-      if (isServer) {
-          res.writeHead(307, {Location: `/top-twenty/${genres[0].id}`}); // 307 - temporary URL redirection
-          res.end()
-      } else {
-          Router.pushRoute('top-twenty', { genreId: genres[0].id }); 
-      }
+        if (!query.genreId || !genresIds.includes(parseInt(query.genreId))) {
+            // redirect to topTwentyAlbums at the first genre received
+            if (isServer) {
+                res.writeHead(307, { Location: `/top-twenty/${genres[0].id}` }); // 307 - temporary URL redirection
+                res.end()
+            } else {
+                Router.pushRoute('top-twenty', { genreId: genres[0].id });
+            }
+        }
+
+        const genreId = parseInt(query.genreId) || genres[0].id;
+
+        reduxStore.dispatch(setCurrentGenreId(genreId));
+
+        const albumEntries = await ITunesService.getTopTwentyAlbumsByGenreId(genreId);
+
+        reduxStore.dispatch(setAlbumEntries(albumEntries));
+
+        return {};
     }
 
-    const genreId = parseInt(query.genreId) || genres[0].id;
-
-    reduxStore.dispatch(setCurrentGenreId(genreId));
-
-    const albumEntries = await ITunesService.getTopTwentyAlbumsByGenreId(genreId);
-    
-    reduxStore.dispatch(setAlbumEntries(albumEntries));
-
-    return {};
-  }
-
-  render () {
-    return (
-      <TopTwentyAlbums />
-    )
-  }
+    render() {
+        return (
+            <TopTwentyAlbums />
+        )
+    }
 }
 
 export default connect()(TopTwentyAlbumsPage)

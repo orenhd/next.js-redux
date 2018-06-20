@@ -6,12 +6,12 @@ export const initialState = {
 }
 
 export function reducer(state = initialState, action) {
-  switch (action.type) {
-    case SET_ACTIVE_PAGE_ROUTE:
-      return { ...state, activePageRoute: action.activePageRoute };
-    case SET_IS_PAGE_RENDERED_ON_SERVER:
-      return { ...state, isPageRenderedOnServer: action.isPageRenderedOnServer };
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case SET_ACTIVE_PAGE_ROUTE:
+            return { ...state, activePageRoute: action.activePageRoute };
+        case SET_IS_PAGE_RENDERED_ON_SERVER:
+            return { ...state, isPageRenderedOnServer: action.isPageRenderedOnServer };
+        default:
+            return state;
+    }
 }
